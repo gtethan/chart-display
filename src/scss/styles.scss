@@ -1,0 +1,15 @@
+@import "bootstrap";
+
+
+chart-display {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding: 1rem;
+
+  .form-container {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 0.3rem;
+  }
+}

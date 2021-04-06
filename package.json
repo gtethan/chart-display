@@ -1,0 +1,40 @@
+{
+  "name": "chart-display",
+  "version": "0.0.1",
+  "description": "display time series chart",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtethan/chart-display.git"
+  },
+  "author": "Ethan Gouty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gtethan/chart-display/issues"
+  },
+  "homepage": "https://github.com/gtethan/chart-display#readme",
+  "dependencies": {
+    "highcharts": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-syntax-top-level-await": "^7.12.13",
+    "@babel/plugin-transform-async-to-generator": "^7.13.0",
+    "@babel/preset-env": "^7.13.12",
+    "babel-loader": "^8.2.2",
+    "bootstrap": "^5.0.0-beta3",
+    "css-loader": "^5.2.0",
+    "mini-css-extract-plugin": "^1.4.0",
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
