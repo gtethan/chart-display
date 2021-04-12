@@ -22,6 +22,7 @@ export class ChartDisplayElement extends HTMLElement {
   }
 
   processData() {
+    // create a key -> value list to store unique data for each day
     processedData = data.categorized_domain_requests.reduce((c, v) => {
       let t = Date.parse(v.summary_date);
       if (isNaN(t)) return c;
@@ -45,6 +46,10 @@ export class ChartDisplayElement extends HTMLElement {
   addFormListeners() {
     const {summaryDate, dataValue, selectedSeries} = this.formElement.elements;
 
+    // we need to listen for input to validate on the date field since
+    // safari does have native support for the type="date" input
+    // we also check to see if we have an invalid 'submit' event
+    // to prevent adding date validation message prematurely
     summaryDate.addEventListener('input', (e) => {
       if (!this.invalidFormSubmit) return;
       this.isValidDate(summaryDate.value)
@@ -55,6 +60,7 @@ export class ChartDisplayElement extends HTMLElement {
   onFormSubmit(e) {
     const {summaryDate, dataValue, selectedSeries} = this.formElement.elements;
 
+    // validate the date and add series point unless invalid
     if (this.isValidDate(summaryDate.value)) {
       this.addSeriesDataPoint(selectedSeries.value, summaryDate.value, dataValue.value);
       this.invalidFormSubmit = false;
@@ -76,6 +82,8 @@ export class ChartDisplayElement extends HTMLElement {
     const {point} = e;
     const {summaryDate, dataValue, selectedSeries, pointFormSubmit} = this.formElement.elements;
 
+    // the selected property is set after this event
+    // and so if it's selected that means it was unselected
     if (point.selected) {
       this.resetForm();
       return;
@@ -105,11 +113,13 @@ export class ChartDisplayElement extends HTMLElement {
 
     value = parseInt(value);
 
+    // find our series based on key we stored
     for (var series of this.chart.series) {
       if (series.userOptions.key === seriesName)
         break;
     }
 
+    // if we have this date stored in our map and the series has a point, then we update
     if (summaryDate in processedData && seriesName in processedData[summaryDate]) {
       for (var point of series.points) {
         if (point.name === summaryDate) {
@@ -130,6 +140,7 @@ export class ChartDisplayElement extends HTMLElement {
       });
     }
 
+    // update or add new summary date point to our map
     processedData[summaryDate] = {
       ...(processedData[summaryDate] || {}),
       ...{
@@ -184,6 +195,8 @@ export class ChartDisplayElement extends HTMLElement {
   }
 
   getChartSeries() {
+    // we deep clone our known defaults and build
+    // our series data based on the data points
     this.series = JSON.parse(JSON.stringify(seriesDefaults));
     for (let dp of this.getDataPoints()) {
       for (let k in this.series) {
